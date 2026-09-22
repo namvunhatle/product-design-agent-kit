@@ -62,7 +62,7 @@ Each skill is self-contained. Install only the ones relevant to your work.
 | [`figma-clone-port`](skills/figma-clone-port/SKILL.md) | Porting components, screens, tokens, and prototype graphs | namvunhatle |
 | [`figma-prototype-motion`](skills/figma-prototype-motion/SKILL.md) | Smart Animate rigs, reaction traps, timing, and handoff | namvunhatle |
 
-Other skills used in the private working setup are not bundled here. [Attribution and upstream links](THIRD_PARTY.md) records the external material we could identify. This avoids presenting someone else's work as ours.
+For complementary UX, UI, and copy skills, see the [Yummy Labs source and download links](THIRD_PARTY.md). These remain authored and distributed by Yummy Labs; their files are not covered by this repository's MIT license.
 
 ## Examples
 
