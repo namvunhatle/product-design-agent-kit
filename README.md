@@ -19,7 +19,7 @@ An AI assistant can make a polished screen while missing the actual job: moving 
 1. Clone this repository:
 
    ```sh
-   git clone https://github.com/reventhy/product-design-agent-kit.git
+   git clone https://github.com/namvunhatle/product-design-agent-kit.git
    cd product-design-agent-kit
    ```
 
