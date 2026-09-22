@@ -4,11 +4,11 @@ Practical AI skills for product designers who move between exploration, Figma pr
 
 ## What is this?
 
-A small, portable set of `SKILL.md` files. Each skill teaches an AI assistant a specific design workflow and the checks that matter in that workflow. This repository contains generalized versions of lessons from real product-design work; it contains no product specs, client files, screenshots, Figma file keys, or old Git history.
+A portable set of design skills plus optional Claude Code rules and agent templates. Each file teaches a specific workflow and the checks that matter in it. This repository contains generalized versions of lessons from real product-design work; it contains no product specs, client files, screenshots, Figma file keys, or old Git history.
 
 ## Who is it for?
 
-Product designers who already use an AI coding assistant with Figma and want the assistant to respect design stage, source fidelity, and motion behavior. The two Figma skills assume access to [Figma Console MCP](https://github.com/southleft/figma-console-mcp) for canvas reads and writes. Designers can use `explore-vs-final` without that integration.
+Product designers who already use an AI assistant and want it to respect design stage, source fidelity, voice, and motion behavior. The Figma skills and Figma agents assume access to [Figma Console MCP](https://github.com/southleft/figma-console-mcp) for canvas reads and writes. The other skills work without it.
 
 ## Why does it exist?
 
@@ -36,7 +36,7 @@ An AI assistant can make a polished screen while missing the actual job: moving 
 
 4. Ask for a concrete task, for example: “Use `explore-vs-final` to build three checkout directions for comparison.”
 
-Each skill is self-contained. Install only the ones relevant to your work.
+Each skill is self-contained. Install only the ones relevant to your work. Claude Code users can also copy selected files from `rules/` to the project's `.claude/rules/` directory and from `agents/` to `.claude/agents/`. Check each agent's `tools:` list against the MCP tools installed in your environment before using it.
 
 ## Core concepts
 
@@ -53,6 +53,10 @@ Each skill is self-contained. Install only the ones relevant to your work.
 | Prepare a chosen direction for handoff | `explore-vs-final` | Structured final design with intentional exceptions noted |
 | Move an existing feature to another Figma file | `figma-clone-port` | Source-to-destination mapping and verification report |
 | Build or debug a Smart Animate chain | `figma-prototype-motion` | Verified reaction graph, timing, and motion handoff |
+| Build structural screens from a wireframe kit | `figma-wireframe-kit` | Measured grayscale flow and open decisions |
+| Build approved UI from an existing design system | `figma-design-system-ui` | Bound components/tokens and visual verification |
+| Set a product voice across several contexts | `voice-tone-builder` | Voice guide, tone map, examples, and audit criteria |
+| Explore a real frustration through satire | `theboxexplore` | Original ideas and a separate serious-concept table |
 
 ## Skills
 
@@ -61,8 +65,27 @@ Each skill is self-contained. Install only the ones relevant to your work.
 | [`explore-vs-final`](skills/explore-vs-final/SKILL.md) | Construction fidelity for options and final designs | namvunhatle |
 | [`figma-clone-port`](skills/figma-clone-port/SKILL.md) | Porting components, screens, tokens, and prototype graphs | namvunhatle |
 | [`figma-prototype-motion`](skills/figma-prototype-motion/SKILL.md) | Smart Animate rigs, reaction traps, timing, and handoff | namvunhatle |
+| [`figma-wireframe-kit`](skills/figma-wireframe-kit/SKILL.md) | Wireframe construction using a kit discovered in the target file | namvunhatle |
+| [`figma-design-system-ui`](skills/figma-design-system-ui/SKILL.md) | Production UI using a live, read-only design system | namvunhatle |
+| [`voice-tone-builder`](skills/voice-tone-builder/SKILL.md) | Consistent voice with tone changes by user context | namvunhatle |
+| [`theboxexplore`](skills/theboxexplore/SKILL.md) | Explicitly invoked satirical idea exploration | namvunhatle; inspired by [Soren's Newsletter](https://sorens.beehiiv.com/) |
 
 For complementary UX, UI, and copy skills, see the [Yummy Labs source and download links](THIRD_PARTY.md). These remain authored and distributed by Yummy Labs; their files are not covered by this repository's MIT license.
+
+## Rules and agents
+
+The [rules](rules/) are optional project conventions for Figma safety, design stage, model choice, and concise writing. The [agents](agents/) are Claude Code templates for bounded work:
+
+| Agent | Scope | Can write? |
+|---|---|---|
+| [`copy-reviewer`](agents/copy-reviewer.md) | Batch microcopy review | No |
+| [`figma-auditor`](agents/figma-auditor.md) | One-file Figma audit | No |
+| [`gitbook-porter`](agents/gitbook-porter.md) | Spec-to-GitBook change request | Mirror file and change request; no merge |
+| [`wireframe-builder`](agents/wireframe-builder.md) | Settled wireframe brief in a new section | Yes, Figma only in its new section |
+
+These templates are adapted from a private setup, with project-specific facts removed. They are not active just because this repository was cloned. Install only the ones that fit your project and its available tools.
+
+Call an agent by name with a bounded brief. Include the target product, source spec, and Figma file key when relevant; agents start without the main conversation's context. Use `figma-auditor` for read-only checks and `wireframe-builder` only when the flow is settled and a new section is acceptable. Review a GitBook change request before merging it.
 
 ## Examples
 
@@ -77,6 +100,7 @@ For complementary UX, UI, and copy skills, see the [Yummy Labs source and downlo
 - **Claude Code:** project-local `.claude/skills/` folders.
 - **Codex:** personal `~/.codex/skills/` folders.
 - **Figma Console MCP:** required to execute the Figma-specific procedures. Tool names and available API operations can change; check the connected server before running a snippet.
+- **GitBook MCP:** needed only for the optional `gitbook-porter` agent. Verify its tool names before installing that template.
 
 The skills are Markdown instructions. Installing them does not grant Figma access or permission to edit a file.
 
@@ -86,4 +110,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Contributions should be generalizable, t
 
 ## License
 
-The three bundled skills and repository documentation are released under the [MIT License](LICENSE). Third-party material linked in `THIRD_PARTY.md` is governed by its own terms and is not included in this license.
+The bundled skills, rules, agents, and repository documentation are released under the [MIT License](LICENSE). Third-party material linked in `THIRD_PARTY.md` is governed by its own terms and is not included in this license.
