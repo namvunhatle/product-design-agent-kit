@@ -1,6 +1,6 @@
 # Third-party material
 
-This release does not redistribute third-party skill files. Download them from their authors. A public download page establishes provenance and access, but it does not by itself grant permission to republish the files under this repository's MIT license.
+This release does not redistribute third-party skill files. Download them from their authors, extract them locally, then use [`scripts/assemble.py`](scripts/assemble.py) to combine them unchanged with this repo's skills in your project. A public download page establishes provenance and access, but it does not by itself grant permission to republish the files under this repository's MIT license.
 
 | Material | Credit / upstream | Status in this repository |
 |---|---|---|

@@ -4,7 +4,7 @@ Practical AI skills for product designers who move between exploration, Figma pr
 
 ## What is this?
 
-A portable set of design skills plus optional Claude Code rules and agent templates. Each file teaches a specific workflow and the checks that matter in it. This repository contains generalized versions of lessons from real product-design work; it contains no product specs, client files, screenshots, Figma file keys, or old Git history.
+A portable set of design skills plus optional Claude Code rules and agent templates. Each file teaches a specific workflow and the checks that matter in it. This repository contains seven original skills and an assembler for six external skills supplied by their authors. It contains generalized versions of lessons from real product-design work; it contains no product specs, client files, screenshots, Figma file keys, or old Git history.
 
 ## Who is it for?
 
@@ -23,20 +23,24 @@ An AI assistant can make a polished screen while missing the actual job: moving 
    cd product-design-agent-kit
    ```
 
-2. Copy the skills you want into your assistant's skill directory. For a Claude Code project:
+2. Download the six external skills from their [official sources](THIRD_PARTY.md), then extract them into one local folder. Extract nested `.skill` or `.zip` packages until each skill has a `SKILL.md` file. The original authors' files are copied unchanged during assembly.
+
+3. Assemble the full Claude Code setup in your own project:
 
    ```sh
-   mkdir -p /path/to/your-project/.claude/skills
-   cp -R skills/explore-vs-final /path/to/your-project/.claude/skills/
+   python3 scripts/assemble.py \
+     --project /path/to/your-project \
+     --upstream-dir /path/to/extracted-official-skills \
+     --with-rules-agents
    ```
 
-   For a personal Codex installation, copy the chosen folders to `~/.codex/skills/`.
+   The script installs this repo's seven skills, copies any supplied author files, and lists external skills still missing. It never overwrites an existing skill, rule, or agent. For a first-party-only install, omit `--upstream-dir`. For a personal Codex installation, copy the chosen skill folders to `~/.codex/skills/`; the Claude Code rule and agent templates do not install there.
 
-3. For the Figma skills, connect Figma Console MCP and verify it can read the intended file. Keep your Figma credentials in your local configuration, never in the project or this repo.
+4. For the Figma skills, connect Figma Console MCP and verify it can read the intended file. Keep your Figma credentials in your local configuration, never in the project or this repo.
 
-4. Ask for a concrete task, for example: “Use `explore-vs-final` to build three checkout directions for comparison.”
+5. Ask for a concrete task, for example: “Use the wireframe track to compare three checkout flows.”
 
-Each skill is self-contained. Install only the ones relevant to your work. Claude Code users can also copy selected files from `rules/` to the project's `.claude/rules/` directory and from `agents/` to `.claude/agents/`. Check each agent's `tools:` list against the MCP tools installed in your environment before using it.
+Install the skills for the track you use. A full track needs its external skills from the official sources; the assembler reports any missing ones. Check each agent's `tools:` list against the MCP tools installed in your environment before using it.
 
 ## Core concepts
 
@@ -46,6 +50,14 @@ Each skill is self-contained. Install only the ones relevant to your work. Claud
 - **Canvas writes need a recovery point.** Pin the target file, save a version-history point, read back uncertain writes, and limit edits to the requested section.
 
 ## Workflows
+
+The kit has **two Figma tracks**. Read [How the skills work together](WORKFLOWS.md) for the exact sequence, the required reference and Mobbin preflight, the five-question UI plan, rules, motion overlay, and agent handoffs.
+
+| Wireframe | Production UI |
+|---|---|
+| `ux-designer` → project context → `figma-wireframe-kit` → `ux-copywriter` | `ux-designer` → project context → `figma-design-system-ui` → `ui-designer` → `ux-copywriter` → build plan |
+
+Load `figma-console-api` before Figma Plugin API writes. Add `figma-prototype-motion` to either track when editing reactions or keyframes. The named external skills come from their original authors and must be installed from those sources.
 
 | You need to… | Start with | Deliverable |
 |---|---|---|
@@ -70,11 +82,11 @@ Each skill is self-contained. Install only the ones relevant to your work. Claud
 | [`voice-tone-builder`](skills/voice-tone-builder/SKILL.md) | Consistent voice with tone changes by user context | namvunhatle |
 | [`theboxexplore`](skills/theboxexplore/SKILL.md) | Explicitly invoked satirical idea exploration | namvunhatle; inspired by [Soren's Newsletter](https://sorens.beehiiv.com/) |
 
-For complementary UX, UI, and copy skills, see the [Yummy Labs source and download links](THIRD_PARTY.md). These remain authored and distributed by Yummy Labs; their files are not covered by this repository's MIT license.
+The external skills named in a workflow are needed to run that full workflow; the other external skills are situational. See the [official source links](THIRD_PARTY.md) and [machine-readable source list](external-skills.json). Their files remain authored and distributed by the original creators and are not covered by this repository's MIT license.
 
 ## Rules and agents
 
-The [rules](rules/) are optional project conventions for Figma safety, design stage, model choice, and concise writing. The [agents](agents/) are Claude Code templates for bounded work:
+The [rules](rules/) include four adapted conventions from the original setup—Figma safety, design stage, model choice, and concise writing—plus a new `design-tracks` routing rule. The [agents](agents/) are Claude Code templates for bounded work:
 
 | Agent | Scope | Can write? |
 |---|---|---|

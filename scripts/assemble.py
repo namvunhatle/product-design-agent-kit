@@ -1,0 +1,100 @@
+#!/usr/bin/env python3
+"""Assemble the design workflow in a Claude Code project from owned and upstream skills."""
+
+import argparse
+import json
+import re
+import shutil
+from pathlib import Path
+from typing import Dict, Optional
+
+
+ROOT = Path(__file__).resolve().parents[1]
+EXTERNAL = json.loads((ROOT / "external-skills.json").read_text(encoding="utf-8"))
+EXTERNAL_BY_NAME = {item["name"]: item for item in EXTERNAL}
+
+
+def name_from_skill(path: Path) -> Optional[str]:
+    text = path.read_text(encoding="utf-8")
+    if not text.startswith("---\n"):
+        return None
+    frontmatter = text.split("---", 2)[1]
+    match = re.search(r"^name:\s*['\"]?([a-z0-9-]+)['\"]?\s*$", frontmatter, re.M)
+    return match.group(1) if match else None
+
+
+def reject_symlinks(path: Path) -> None:
+    if path.is_symlink() or any(child.is_symlink() for child in path.rglob("*")):
+        raise ValueError(f"Skill contains a symlink: {path}")
+
+
+def copy_directory(source: Path, target: Path) -> str:
+    reject_symlinks(source)
+    if target.exists():
+        return f"kept existing {target}"
+    shutil.copytree(source, target)
+    return f"installed {target}"
+
+
+def find_upstream(root: Path) -> Dict[str, Path]:
+    found = {}  # type: Dict[str, Path]
+    for entry in root.rglob("SKILL.md"):
+        name = name_from_skill(entry)
+        if name not in EXTERNAL_BY_NAME:
+            continue
+        if name in found:
+            raise ValueError(f"Multiple upstream copies found for {name}: {found[name]} and {entry}")
+        found[name] = entry.parent
+    return found
+
+
+def copy_optional_files(source_dir: Path, target_dir: Path) -> None:
+    target_dir.mkdir(parents=True, exist_ok=True)
+    for source in sorted(source_dir.glob("*.md")):
+        target = target_dir / source.name
+        if target.exists():
+            print(f"kept existing {target}")
+        else:
+            shutil.copy2(source, target)
+            print(f"installed {target}")
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--project", required=True, type=Path, help="Existing Claude Code project directory")
+    parser.add_argument("--upstream-dir", type=Path, help="Folder containing skills extracted from the authors' downloads")
+    parser.add_argument("--with-rules-agents", action="store_true", help="Also install the optional Claude Code rules and agents")
+    args = parser.parse_args()
+
+    project = args.project.expanduser().resolve()
+    if not project.is_dir():
+        parser.error(f"Project directory does not exist: {project}")
+    if args.upstream_dir and not args.upstream_dir.expanduser().is_dir():
+        parser.error(f"Upstream directory does not exist: {args.upstream_dir}")
+
+    dest = project / ".claude" / "skills"
+    dest.mkdir(parents=True, exist_ok=True)
+    for source in sorted((ROOT / "skills").iterdir()):
+        if source.is_dir() and (source / "SKILL.md").is_file():
+            print(copy_directory(source, dest / source.name))
+
+    upstream = find_upstream(args.upstream_dir.expanduser().resolve()) if args.upstream_dir else {}
+    for name, source in sorted(upstream.items()):
+        print(copy_directory(source, dest / name))
+
+    if args.with_rules_agents:
+        copy_optional_files(ROOT / "rules", project / ".claude" / "rules")
+        copy_optional_files(ROOT / "agents", project / ".claude" / "agents")
+
+    missing = [item for item in EXTERNAL if not (dest / item["name"] / "SKILL.md").is_file()]
+    if missing:
+        print("\nExternal skills still needed for the full workflow:")
+        for item in missing:
+            print(f"- {item['name']} — {item['author']}: {item['source']}")
+        print("Download from the author, extract until each skill folder contains SKILL.md, then rerun with --upstream-dir.")
+    else:
+        print("\nAll skills in the workflow are installed.")
+
+
+if __name__ == "__main__":
+    main()
