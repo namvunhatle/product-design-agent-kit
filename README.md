@@ -23,24 +23,23 @@ An AI assistant can make a polished screen while missing the actual job: moving 
    cd product-design-agent-kit
    ```
 
-2. Download the five Yummy Labs skills from their [official sources](THIRD_PARTY.md), then extract them into one local folder. Extract nested `.skill` or `.zip` packages until each skill has a `SKILL.md` file. The original author's files are copied unchanged during assembly.
+2. Install [gdown](https://github.com/wkentaro/gdown) once (`python3 -m pip install gdown`). It needs Python 3.10 or newer and downloads from the author's public Google Drive links without using browser cookies.
 
 3. Assemble the full Claude Code setup in your own project:
 
    ```sh
-   python3 scripts/assemble.py \
+   python3 scripts/install.py \
      --project /path/to/your-project \
-     --upstream-dir /path/to/extracted-official-skills \
      --with-rules-agents
    ```
 
-   The script installs this repo's eight bundled skills, copies any supplied author files, and lists external skills still missing. It never overwrites an existing skill, rule, or agent. To install only the bundled skills, omit `--upstream-dir`. For a personal Codex installation, copy the chosen skill folders to `~/.codex/skills/`; the Claude Code rule and agent templates do not install there.
+   The installer fetches five Yummy Labs skills from the author's [official downloads](upstream-packages.json), unpacks nested `.skill` archives, and combines them with this repo's eight bundled skills. It keeps the author's file contents unchanged, corrects reference-file placement where the archive layout differs from `SKILL.md`, and never overwrites an existing skill, rule, or agent. If an author link changes or you already have the archives, [assemble from local files](THIRD_PARTY.md). For a personal Codex installation, copy the chosen skill folders to `~/.codex/skills/`; the Claude Code rule and agent templates do not install there.
 
 4. For the Figma skills, connect Figma Console MCP and verify it can read the intended file. Keep your Figma credentials in your local configuration, never in the project or this repo.
 
 5. Ask for a concrete task, for example: “Use the wireframe track to compare three checkout flows.”
 
-Install the skills for the track you use. A full track needs its external skills from the official sources; the assembler reports any missing ones. Check each agent's `tools:` list against the MCP tools installed in your environment before using it.
+Install the skills for the track you use. A full track needs its external skills from the official sources; the installer checks that all five are present before modifying your project. Check each agent's `tools:` list against the MCP tools installed in your environment before using it.
 
 ## Core concepts
 
@@ -112,6 +111,7 @@ Call an agent by name with a bounded brief. Include the target product, source s
 
 - **Claude Code:** project-local `.claude/skills/` folders.
 - **Codex:** personal `~/.codex/skills/` folders.
+- **gdown:** needed only by the automatic installer to retrieve the author's public Google Drive packages.
 - **Figma Console MCP:** required to execute the Figma-specific procedures. Tool names and available API operations can change; check the connected server before running a snippet.
 - **GitBook MCP:** needed only for the optional `gitbook-porter` agent. Verify its tool names before installing that template.
 

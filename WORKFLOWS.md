@@ -30,13 +30,13 @@ ux-designer (Yummy Labs)
   → figma-design-system-ui (this repo; generic adaptation)
   → ui-designer (Yummy Labs)
   → ux-copywriter (Yummy Labs)
-  → short build plan and designer review
+  → kit's five-question build plan and designer review
   → build, inspect pixels, verify bindings and states
 ```
 
 Use this track for a selected visual direction and handoff-ready screens. `ui-designer` is the added visual-craft step that distinguishes it from the wireframe track. Query the actual destination library for components, variable modes, and token values. Treat the shared library as read-only unless the user explicitly requests library work. Load `figma-console-api` before writing Figma Plugin API code.
 
-The `ui-designer` build plan answers five questions: (1) which existing components will be reused, with exact references; (2) which new components are needed and why; (3) which interaction and data states each component needs; (4) what the screen → region → component hierarchy is; and (5) which empty, failure, permission, length, and localization edge cases matter. Present one component table, one hierarchy tree, and one edge-case list for designer review before a substantial canvas build. Track decisions that arise during the build. For a narrow fix to an already approved screen, load only the skills relevant to that fix.
+The kit's `design-tracks` rule adds a build plan from the original workflow; it is not part of Yummy Labs' skill. It answers five questions: (1) which existing components will be reused, with exact references; (2) which new components are needed and why; (3) which interaction and data states each component needs; (4) what the screen → region → component hierarchy is; and (5) which empty, failure, permission, length, and localization edge cases matter. Present one component table, one hierarchy tree, and one edge-case list for designer review before a substantial canvas build. Track decisions that arise during the build. For a narrow fix to an already approved screen, load only the skills relevant to that fix.
 
 ## Motion is an overlay
 

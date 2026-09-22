@@ -48,6 +48,21 @@ def find_upstream(root: Path) -> Dict[str, Path]:
     return found
 
 
+def repair_reference_paths(skill_dir: Path):
+    """Add reference copies at paths named by the author's SKILL.md."""
+    references = skill_dir / "references"
+    for flat in skill_dir.glob("*.md"):
+        if flat.name == "SKILL.md" or flat.name.lower().startswith(("license", "notice")):
+            continue
+        references.mkdir(exist_ok=True)
+        target = references / flat.name
+        if not target.exists():
+            shutil.copy2(flat, target)
+    content = (skill_dir / "SKILL.md").read_text(encoding="utf-8")
+    mentioned = set(re.findall(r"references/([A-Za-z0-9_.-]+\.md)", content))
+    return sorted(name for name in mentioned if not (references / name).is_file())
+
+
 def copy_optional_files(source_dir: Path, target_dir: Path) -> None:
     target_dir.mkdir(parents=True, exist_ok=True)
     for source in sorted(source_dir.glob("*.md")):
@@ -79,8 +94,15 @@ def main() -> None:
             print(copy_directory(source, dest / source.name))
 
     upstream = find_upstream(args.upstream_dir.expanduser().resolve()) if args.upstream_dir else {}
+    missing_reference_files = {}
     for name, source in sorted(upstream.items()):
-        print(copy_directory(source, dest / name))
+        target = dest / name
+        already_installed = target.exists()
+        print(copy_directory(source, target))
+        if not already_installed:
+            missing_references = repair_reference_paths(target)
+            if missing_references:
+                missing_reference_files[name] = missing_references
 
     if args.with_rules_agents:
         copy_optional_files(ROOT / "rules", project / ".claude" / "rules")
@@ -93,7 +115,12 @@ def main() -> None:
             print(f"- {item['name']} — {item['author']}: {item['source']}")
         print("Download from the author, extract until each skill folder contains SKILL.md, then rerun with --upstream-dir.")
     else:
-        print("\nAll skills in the workflow are installed.")
+        print("\nAll skill folders in the workflow are installed.")
+    if missing_reference_files:
+        print("\nReferences named by an author but absent from the official package:")
+        for name, files in sorted(missing_reference_files.items()):
+            print(f"- {name}: {', '.join(files)}")
+        print("Use the author's source page or your own product reference for these gaps.")
 
 
 if __name__ == "__main__":
