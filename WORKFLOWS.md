@@ -1,6 +1,6 @@
 # How the skills work together
 
-This is the routing used by the original design setup, with project-specific libraries replaced by skills that query the destination file. **A track is a sequence, not a single skill.** The six external skills in the sequences are listed in [THIRD_PARTY.md](THIRD_PARTY.md) and installed from their authors' files.
+This is the routing used by the original design setup, with project-specific libraries replaced by skills that query the destination file. **A track is a sequence, not a single skill.** The five Yummy Labs skills in the sequences are listed in [THIRD_PARTY.md](THIRD_PARTY.md) and installed from the author's files.
 
 ## Choose the stage first
 
@@ -48,7 +48,7 @@ For a coded React prototype, use Yummy Labs' `interactive-prototype` instead of 
 
 - **Port an approved feature:** `figma-clone-port` → `figma-design-system-ui` for the destination. Add `figma-prototype-motion` if the source includes reaction chains. Inspect source and destination files in separate pinned runs.
 - **Set voice across the product:** `voice-tone-builder`; then use `ux-copywriter` for specific interface strings. `copy-reviewer` can audit a batch without editing files or Figma.
-- **Long-form research writing:** ComposioHQ's `content-research-writer`, outside the Figma tracks.
+- **Long-form research writing:** the bundled Apache-licensed `content-research-writer` by ComposioHQ, outside the Figma tracks.
 - **Satirical idea exploration:** `theboxexplore` only when invoked by name, outside ordinary UX planning.
 - **Publish an approved spec:** `gitbook-porter` creates and verifies a change request, then stops before merge.
 

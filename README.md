@@ -4,7 +4,7 @@ Practical AI skills for product designers who move between exploration, Figma pr
 
 ## What is this?
 
-A portable set of design skills plus optional Claude Code rules and agent templates. Each file teaches a specific workflow and the checks that matter in it. This repository contains seven original skills and an assembler for six external skills supplied by their authors. It contains generalized versions of lessons from real product-design work; it contains no product specs, client files, screenshots, Figma file keys, or old Git history.
+A portable set of design skills plus optional Claude Code rules and agent templates. Each file teaches a specific workflow and the checks that matter in it. This repository contains seven original skills, one Apache-licensed skill by ComposioHQ, and an assembler for five Yummy Labs skills supplied by their author. It contains generalized versions of lessons from real product-design work; it contains no product specs, client files, screenshots, Figma file keys, or old Git history.
 
 ## Who is it for?
 
@@ -23,7 +23,7 @@ An AI assistant can make a polished screen while missing the actual job: moving 
    cd product-design-agent-kit
    ```
 
-2. Download the six external skills from their [official sources](THIRD_PARTY.md), then extract them into one local folder. Extract nested `.skill` or `.zip` packages until each skill has a `SKILL.md` file. The original authors' files are copied unchanged during assembly.
+2. Download the five Yummy Labs skills from their [official sources](THIRD_PARTY.md), then extract them into one local folder. Extract nested `.skill` or `.zip` packages until each skill has a `SKILL.md` file. The original author's files are copied unchanged during assembly.
 
 3. Assemble the full Claude Code setup in your own project:
 
@@ -34,7 +34,7 @@ An AI assistant can make a polished screen while missing the actual job: moving 
      --with-rules-agents
    ```
 
-   The script installs this repo's seven skills, copies any supplied author files, and lists external skills still missing. It never overwrites an existing skill, rule, or agent. For a first-party-only install, omit `--upstream-dir`. For a personal Codex installation, copy the chosen skill folders to `~/.codex/skills/`; the Claude Code rule and agent templates do not install there.
+   The script installs this repo's eight bundled skills, copies any supplied author files, and lists external skills still missing. It never overwrites an existing skill, rule, or agent. To install only the bundled skills, omit `--upstream-dir`. For a personal Codex installation, copy the chosen skill folders to `~/.codex/skills/`; the Claude Code rule and agent templates do not install there.
 
 4. For the Figma skills, connect Figma Console MCP and verify it can read the intended file. Keep your Figma credentials in your local configuration, never in the project or this repo.
 
@@ -74,6 +74,7 @@ Load `figma-console-api` before Figma Plugin API writes. Add `figma-prototype-mo
 
 | Skill | What it covers | Author |
 |---|---|---|
+| [`content-research-writer`](skills/content-research-writer/SKILL.md) | Research-backed long-form writing | ComposioHQ; [Apache License 2.0](skills/content-research-writer/LICENSE-2.0.txt) |
 | [`explore-vs-final`](skills/explore-vs-final/SKILL.md) | Construction fidelity for options and final designs | namvunhatle |
 | [`figma-clone-port`](skills/figma-clone-port/SKILL.md) | Porting components, screens, tokens, and prototype graphs | namvunhatle |
 | [`figma-prototype-motion`](skills/figma-prototype-motion/SKILL.md) | Smart Animate rigs, reaction traps, timing, and handoff | namvunhatle |
@@ -82,7 +83,7 @@ Load `figma-console-api` before Figma Plugin API writes. Add `figma-prototype-mo
 | [`voice-tone-builder`](skills/voice-tone-builder/SKILL.md) | Consistent voice with tone changes by user context | namvunhatle |
 | [`theboxexplore`](skills/theboxexplore/SKILL.md) | Explicitly invoked satirical idea exploration | namvunhatle; inspired by [Soren's Newsletter](https://sorens.beehiiv.com/) |
 
-The external skills named in a workflow are needed to run that full workflow; the other external skills are situational. See the [official source links](THIRD_PARTY.md) and [machine-readable source list](external-skills.json). Their files remain authored and distributed by the original creators and are not covered by this repository's MIT license.
+The Yummy Labs skills named in a workflow are needed to run that full workflow. See the [official source links](THIRD_PARTY.md) and [machine-readable source list](external-skills.json). Their files remain authored and distributed by Yummy Labs and are not covered by this repository's MIT license. The bundled ComposioHQ skill retains its Apache 2.0 license and [source credit](skills/content-research-writer/NOTICE.md).
 
 ## Rules and agents
 
@@ -122,4 +123,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Contributions should be generalizable, t
 
 ## License
 
-The bundled skills, rules, agents, and repository documentation are released under the [MIT License](LICENSE). Third-party material linked in `THIRD_PARTY.md` is governed by its own terms and is not included in this license.
+The seven original skills, rules, agents, scripts, and repository documentation are released under the [MIT License](LICENSE). The bundled ComposioHQ skill keeps its [Apache License 2.0](skills/content-research-writer/LICENSE-2.0.txt). The five Yummy Labs skills linked in `THIRD_PARTY.md` are distributed by their author and are not included in either license grant here.

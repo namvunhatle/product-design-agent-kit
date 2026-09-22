@@ -1,6 +1,6 @@
 # Third-party material
 
-This release does not redistribute third-party skill files. Download them from their authors, extract them locally, then use [`scripts/assemble.py`](scripts/assemble.py) to combine them unchanged with this repo's skills in your project. A public download page establishes provenance and access, but it does not by itself grant permission to republish the files under this repository's MIT license.
+The ComposioHQ skill is bundled under its Apache 2.0 license, with [source credit](skills/content-research-writer/NOTICE.md). The five Yummy Labs skills are not redistributed here. Download them from the author, extract them locally, then use [`scripts/assemble.py`](scripts/assemble.py) to combine them unchanged with this repo's skills in your project. A public download page establishes provenance and access, but it does not by itself grant permission to republish the files under this repository's MIT license.
 
 | Material | Credit / upstream | Status in this repository |
 |---|---|---|
@@ -8,9 +8,9 @@ This release does not redistribute third-party skill files. Download them from t
 | UX Copywriter | [Yummy Labs — Claude UX Copywriter Skill](https://yummy-design-sprint.notion.site/Claude-UX-Copywriter-Skill-31962791470980989abdcd6312890920) | Official download linked; file not bundled |
 | Figma Console MCP Plugin API Reference skill | [Yummy Labs — Claude Figma Console MCP Skill](https://yummy-design-sprint.notion.site/Claude-Figma-Console-MCP-Skill-373627914709803db438e40efeaf4679) | Official download linked; files not bundled |
 | Interactive Prototype skill | [Yummy Labs — Claude prototype skill](https://yummy-design-sprint.notion.site/Claude-prototype-skill-35f62791470980cc8fffe64e6a5e5894) | Official download linked; files not bundled |
-| Content Research Writer | [ComposioHQ/awesome-claude-skills](https://github.com/ComposioHQ/awesome-claude-skills/tree/master/content-research-writer) | Not bundled |
+| Content Research Writer | [ComposioHQ/awesome-claude-skills](https://github.com/ComposioHQ/awesome-claude-skills/tree/master/content-research-writer) | [Bundled](skills/content-research-writer/SKILL.md) under Apache License 2.0 |
 | Figma Console MCP | [southleft/figma-console-mcp](https://github.com/southleft/figma-console-mcp) | External tool dependency, not bundled |
 
-Other skills in the private setup have unverified provenance or depend on product-specific libraries. They are not included in this release. An upstream author's name in a local file is a credit, not evidence of permission to redistribute it.
+Project-specific source files are not included in this release. An upstream author's name in a local file is a credit, not evidence of permission to redistribute it.
 
 `theboxexplore` is authored by namvunhatle and credits [Soren's Newsletter](https://sorens.beehiiv.com/) as inspiration. The bundled skill uses original examples and does not reproduce newsletter posts.
