@@ -4,7 +4,7 @@ Practical AI skills for product designers who move between exploration, Figma pr
 
 ## What is this?
 
-A portable set of design skills plus optional Claude Code rules and agent templates. Each file teaches a specific workflow and the checks that matter in it. This repository contains seven original skills, one Apache-licensed skill by ComposioHQ, and an assembler for five Yummy Labs skills supplied by their author. It contains generalized versions of lessons from real product-design work; it contains no product specs, client files, screenshots, Figma file keys, or old Git history.
+A portable set of design skills plus optional Claude Code rules and agent templates. Each file teaches a specific workflow and the checks that matter in it. This repository contains eight original skills, one Apache-licensed skill by ComposioHQ, and an installer for five Yummy Labs skills supplied by their author. It contains generalized versions of lessons from real product-design work; it contains no product specs, client files, screenshots, Figma file keys, or old Git history.
 
 ## Who is it for?
 
@@ -25,19 +25,19 @@ An AI assistant can make a polished screen while missing the actual job: moving 
 
 2. Install [gdown](https://github.com/wkentaro/gdown) once (`python3 -m pip install gdown`). It needs Python 3.10 or newer and downloads from the author's public Google Drive links without using browser cookies.
 
-3. Assemble the full Claude Code setup in your own project:
+3. Start onboarding in your own Claude Code project:
 
    ```sh
-   python3 scripts/install.py \
-     --project /path/to/your-project \
-     --with-rules-agents
+   ./start --project /path/to/your-project
    ```
 
-   The installer fetches five Yummy Labs skills from the author's [official downloads](upstream-packages.json), unpacks nested `.skill` archives, and combines them with this repo's eight bundled skills. It keeps the author's file contents unchanged, corrects reference-file placement where the archive layout differs from `SKILL.md`, and never overwrites an existing skill, rule, or agent. If an author link changes or you already have the archives, [assemble from local files](THIRD_PARTY.md). For a personal Codex installation, copy the chosen skill folders to `~/.codex/skills/`; the Claude Code rule and agent templates do not install there.
+   `./start` fetches five Yummy Labs skills from the author's [official downloads](upstream-packages.json), combines them with this repo's nine bundled skills, and opens Claude Code with `/start-design`. It never overwrites an existing skill. Optional rules and agents are staged in `.claude/design-kit-templates/`; onboarding lets you choose which to activate. If Claude Code is unavailable, run `cd /path/to/your-project && claude '/start-design'` later. Use `--no-launch` to prepare the project without opening Claude Code.
+
+   The downloads retain the author's file contents, with reference-file placement corrected where an archive layout differs from `SKILL.md`. If an author link changes or you already have the archives, [assemble from local files](THIRD_PARTY.md). For a personal Codex installation, copy the chosen skill folders to `~/.codex/skills/`; this onboarding is currently for Claude Code.
 
 4. For the Figma skills, connect Figma Console MCP and verify it can read the intended file. Keep your Figma credentials in your local configuration, never in the project or this repo.
 
-5. Ask for a concrete task, for example: “Use the wireframe track to compare three checkout flows.”
+5. In `/start-design`, check project context, choose relevant rules and agents, and name a concrete first task. If context is missing, it directs you to Yummy Labs' official [design-context-setup](https://yummy-design-sprint.notion.site/A-skill-for-Claude-Code-that-sets-your-design-project-up-properly-3bb6279147098015b2bae1a60aba566f) before picking a track.
 
 Install the skills for the track you use. A full track needs its external skills from the official sources; the installer checks that all five are present before modifying your project. Check each agent's `tools:` list against the MCP tools installed in your environment before using it.
 
@@ -74,6 +74,7 @@ Load `figma-console-api` before Figma Plugin API writes. Add `figma-prototype-mo
 | Skill | What it covers | Author |
 |---|---|---|
 | [`content-research-writer`](skills/content-research-writer/SKILL.md) | Research-backed long-form writing | ComposioHQ; [Apache License 2.0](skills/content-research-writer/LICENSE-2.0.txt) |
+| [`start-design`](skills/start-design/SKILL.md) | Project onboarding and first-task routing | namvunhatle |
 | [`explore-vs-final`](skills/explore-vs-final/SKILL.md) | Construction fidelity for options and final designs | namvunhatle |
 | [`figma-clone-port`](skills/figma-clone-port/SKILL.md) | Porting components, screens, tokens, and prototype graphs | namvunhatle |
 | [`figma-prototype-motion`](skills/figma-prototype-motion/SKILL.md) | Smart Animate rigs, reaction traps, timing, and handoff | namvunhatle |
@@ -123,4 +124,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Contributions should be generalizable, t
 
 ## License
 
-The seven original skills, rules, agents, scripts, and repository documentation are released under the [MIT License](LICENSE). The bundled ComposioHQ skill keeps its [Apache License 2.0](skills/content-research-writer/LICENSE-2.0.txt). The five Yummy Labs skills linked in `THIRD_PARTY.md` are distributed by their author and are not included in either license grant here.
+The eight original skills, rules, agents, scripts, and repository documentation are released under the [MIT License](LICENSE). The bundled ComposioHQ skill keeps its [Apache License 2.0](skills/content-research-writer/LICENSE-2.0.txt). The five Yummy Labs skills linked in `THIRD_PARTY.md` are distributed by their author and are not included in either license grant here.

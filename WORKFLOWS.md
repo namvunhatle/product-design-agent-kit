@@ -2,6 +2,10 @@
 
 This is the routing used by the original design setup, with project-specific libraries replaced by skills that query the destination file. **A track is a sequence, not a single skill.** The five Yummy Labs skills in the sequences are listed in [THIRD_PARTY.md](THIRD_PARTY.md) and installed from the author's files.
 
+## Start a project
+
+After cloning the kit, run `./start --project /path/to/your-project`. The installed `/start-design` skill checks project context, lets the designer choose relevant rule and agent templates, then routes a concrete first task through the tracks below. If project context is missing, use Yummy Labs' official [design-context-setup](https://yummy-design-sprint.notion.site/A-skill-for-Claude-Code-that-sets-your-design-project-up-properly-3bb6279147098015b2bae1a60aba566f) first. The kit links to that skill; it does not redistribute it.
+
 ## Choose the stage first
 
 Load `explore-vs-final` when the work may produce rejected options or a selected design for handoff. Exploration can use direct positioning and local values; a final direction needs durable layout, appropriate tokens, components, and complete states. This choice sits across both Figma tracks.

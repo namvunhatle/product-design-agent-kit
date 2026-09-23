@@ -12,6 +12,7 @@ Known source-package gap: `figma-console-api/SKILL.md` points to `references/des
 | UX Copywriter | [Yummy Labs — Claude UX Copywriter Skill](https://yummy-design-sprint.notion.site/Claude-UX-Copywriter-Skill-31962791470980989abdcd6312890920) | Official download linked; file not bundled |
 | Figma Console MCP Plugin API Reference skill | [Yummy Labs — Claude Figma Console MCP Skill](https://yummy-design-sprint.notion.site/Claude-Figma-Console-MCP-Skill-373627914709803db438e40efeaf4679) | Official download linked; files not bundled |
 | Interactive Prototype skill | [Yummy Labs — Claude prototype skill](https://yummy-design-sprint.notion.site/Claude-prototype-skill-35f62791470980cc8fffe64e6a5e5894) | Official download linked; files not bundled |
+| Design Context Setup | [Yummy Labs — project setup guide](https://yummy-design-sprint.notion.site/A-skill-for-Claude-Code-that-sets-your-design-project-up-properly-3bb6279147098015b2bae1a60aba566f) and [yummy-design-plugins](https://github.com/yummylabs-coder/yummy-design-plugins) | Optional onboarding dependency; linked, not bundled |
 | Content Research Writer | [ComposioHQ/awesome-claude-skills](https://github.com/ComposioHQ/awesome-claude-skills/tree/master/content-research-writer) | [Bundled](skills/content-research-writer/SKILL.md) under Apache License 2.0 |
 | Figma Console MCP | [southleft/figma-console-mcp](https://github.com/southleft/figma-console-mcp) | External tool dependency, not bundled |
 

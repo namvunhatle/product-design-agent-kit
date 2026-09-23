@@ -1,0 +1,76 @@
+#!/usr/bin/env python3
+"""Install the kit in a Claude Code project and begin its design onboarding."""
+
+import argparse
+import shlex
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parent
+EXTERNAL = ("ux-designer", "ui-designer", "ux-copywriter", "interactive-prototype", "figma-console-api")
+
+
+def stage_templates(project: Path) -> None:
+    """Keep optional rules and agents available without activating them."""
+    for kind in ("rules", "agents"):
+        destination = project / ".claude" / "design-kit-templates" / kind
+        destination.mkdir(parents=True, exist_ok=True)
+        for source in sorted((ROOT / kind).glob("*.md")):
+            target = destination / source.name
+            if not target.exists():
+                shutil.copy2(source, target)
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--project", type=Path, help="Existing design project (asked if omitted)")
+    parser.add_argument("--gdown", default="gdown", help="Path to gdown executable")
+    parser.add_argument("--no-launch", action="store_true", help="Set up files without opening Claude Code")
+    args = parser.parse_args()
+
+    if args.project is None:
+        if not sys.stdin.isatty():
+            parser.error("Pass --project when running without an interactive terminal")
+        answer = input("Path to your design project: ").strip()
+        if not answer:
+            parser.error("A project path is required")
+        args.project = Path(answer)
+
+    project = args.project.expanduser().resolve()
+    if not project.is_dir():
+        parser.error(f"Project directory does not exist: {project}")
+    if project == ROOT or ROOT in project.parents:
+        parser.error("Choose your design project, outside the product-design-agent-kit folder")
+
+    skills = project / ".claude" / "skills"
+    has_external = all((skills / name / "SKILL.md").is_file() for name in EXTERNAL)
+    if has_external:
+        command = [sys.executable, str(ROOT / "scripts" / "assemble.py"), "--project", str(project)]
+    else:
+        if shutil.which(args.gdown) is None:
+            parser.error("gdown is required for the official Yummy downloads. Install it with: python3 -m pip install gdown")
+        command = [sys.executable, str(ROOT / "scripts" / "install.py"), "--project", str(project), "--gdown", args.gdown]
+    subprocess.run(command, check=True)
+    stage_templates(project)
+
+    print("\nOptional rules and agents are ready in .claude/design-kit-templates/.")
+    if not (project / "CLAUDE.md").is_file() or not (project / "SETUP.md").is_file():
+        print("One or both standard context files are missing. /start-design will check for equivalent context and guide setup if needed.")
+    else:
+        print("Project context found. /start-design will review it and help choose your first track.")
+
+    claude = shutil.which("claude")
+    if args.no_launch or claude is None or not (sys.stdin.isatty() and sys.stdout.isatty()):
+        print(f"\nNext: cd {shlex.quote(str(project))} && claude '/start-design'")
+        if claude is None:
+            print("Install Claude Code first: https://code.claude.com/docs/en/overview")
+        return
+    print("\nOpening Claude Code with /start-design…", flush=True)
+    subprocess.run([claude, "/start-design"], cwd=project, check=True)
+
+
+if __name__ == "__main__":
+    main()
